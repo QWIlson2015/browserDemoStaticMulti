@@ -1,0 +1,21 @@
+body {
+    background-color: #42cbf4;
+    margin-left: 20px;
+    font-family: Sans-serif;
+    font-size: 13px;
+    margin-left: 20px;
+    color: white;
+}
+
+#nadpis {
+    font-size: 20px;
+	margin-bottom : 20px;
+	margin-top : 20px;
+}
+
+
+table.stat th, table.stat td {
+  font-size: 13px;
+  font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;
+  color : white
+}
