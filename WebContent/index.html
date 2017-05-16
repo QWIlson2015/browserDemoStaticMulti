@@ -1,5 +1,4 @@
 
-<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -33,10 +32,9 @@
 <!--initialize the SDK -->
 
   <script>    
-  
-    // US demo AppID : T50C477DC-69CB-47E6-A9FB-43E9CA6B4CF4
-    // CZ demo AppID : TA4E1F558-9F41-4860-9D30-E42627FD62AD
-    var staticSdkInstance = NOLBUNDLE.nlsQ("T50C477DC-69CB-47E6-A9FB-43E9CA6B4CF4", "staticSdkInstance", { nol_sdkDebug: "debug" });        
+  // CZ static moje TA4E1F558-9F41-4860-9D30-E42627FD62AD
+  // CZ static pro CT : T979A0E54-D93B-4E22-83CF-350A1F7C41D4  - test jestli event 48 bude mit nazev - 16.5. stale nejde, Tom to fix
+    var staticSdkInstance = NOLBUNDLE.nlsQ("TA4E1F558-9F41-4860-9D30-E42627FD62AD", "staticSdkInstance", { nol_sdkDebug: "debug" });        
   
   </script>  
 
@@ -45,16 +43,6 @@
  
     <script>
     
-      // US metadata 
-      /**
-      var staticMeta = {  
-           "type":"static",
-           "assetid":"static-123",
-            };
-
-      **/
-     // CZ metadata
-   
       var staticMeta = { 
           "type":"static",
           "section":"static-123",
@@ -65,7 +53,7 @@
            };
    
      
-<!--call static event-->
+<!--call staticstart API event-->
      
       staticSdkInstance.ggPM("staticstart",staticMeta);
 
