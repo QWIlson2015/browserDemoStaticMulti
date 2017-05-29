@@ -3,62 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
+  <title>Nielsen Sample Player with BSDK</title>
   <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <link rel="shortcut icon" href="http://sdkdemo.admosphere.cz/favicon.ico">
+  
+  <!-- jquery -->
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   
 </head>
 <body>
     
-<!--Add Static Queue Snippet here -->
-  
-  <script type="text/javascript">
- 
-    !function(t,n){t[n]=t[n]||
-    {
-      nlsQ:function(e,o,c,r,s,i)
-        {
-          return s=t.document,
-          r=s.createElement("script"),
-          r.async=1,
-          r.src=("http:"===t.location.protocol?"http:":"https:")+"//cdn-gl.imrworldwide.com/conf/"+e+".js#name="+o+"&ns="+n,i=s.getElementsByTagName("script")[0],i.parentNode.insertBefore(r,i),
-          t[o]=t[o]||{g:c,ggPM:function(n,e,c,r,s){(t[o].q=t[o].q||[]).push([n,e,c,r,s])}},t[o]}
-        }
-    }
-    (window,"NOLBUNDLE");
-
-  </script>
- 
-
-<!--initialize the SDK -->
-
-  <script>    
-  // CZ static moje TA4E1F558-9F41-4860-9D30-E42627FD62AD
-  // CZ static pro CT : T979A0E54-D93B-4E22-83CF-350A1F7C41D4  - test jestli event 48 bude mit nazev - 16.5. stale nejde, Tom to fix
-    var staticSdkInstance = NOLBUNDLE.nlsQ("TA4E1F558-9F41-4860-9D30-E42627FD62AD", "staticSdkInstance", { nol_sdkDebug: "debug" });        
-  
-  </script>  
-
-
-<!--create static metadata object -->
- 
-    <script>
-    
-      var staticMeta = { 
-          "type":"static",
-          "section":"static-123",
-          "assetid":"static-123",
-          "segA":"segA example",
-          "segB":"segB example",
-          "segC":"segC example"
-           };
-   
-     
-<!--call staticstart API event-->
-     
-      staticSdkInstance.ggPM("staticstart",staticMeta);
-
-   </script>
- 
+   	<div id="nadpis">Browser Demo - Static (page) measurement</div>
  
  	<table border="0" class="stat">
 		<tr>
@@ -77,11 +32,85 @@
 			<td>Nielsen SDK impletentation</td>
 			<td>DONE</td>
 		</tr>
+		<tr>
+			<td>certified</td>
+			<td>..pending ..</td>
+		</tr>
 	</table>
 	
 	<br><br>
   	This is a static page example <br><br>
   	use Chrome Developer Tool - Console to confirm that event "staticstart" is beeing sent every second once browser windows is active   
  
+ 	<br><br>Window status :
+  	<div id="isWindowActive"></div>
+  	
+
+  
+	<script type="text/javascript">
+
+	
+	<!--Add Static Queue Snippet here -->
+	
+	    !function(t,n){t[n]=t[n]||
+	    {
+	      nlsQ:function(e,o,c,r,s,i)
+	        {
+	          return s=t.document,
+	          r=s.createElement("script"),
+	          r.async=1,
+	          r.src=("http:"===t.location.protocol?"http:":"https:")+"//cdn-gl.imrworldwide.com/conf/"+e+".js#name="+o+"&ns="+n,i=s.getElementsByTagName("script")[0],i.parentNode.insertBefore(r,i),
+	          t[o]=t[o]||{g:c,ggPM:function(n,e,c,r,s){(t[o].q=t[o].q||[]).push([n,e,c,r,s])}},t[o]}
+	        }
+	    }
+	    (window,"NOLBUNDLE");
+ 
+
+	<!--initialize the SDK -->
+												
+  		var staticSdkInstance = NOLBUNDLE.nlsQ("T74896328-A13B-4985-8798-0AEBFA228D3E", "staticSdkInstance", { nol_sdkDebug: "debug" });        
+  
+ 
+	<!--create static metadata object -->
+ 
+        var staticMeta = { 
+	          "type":"static",
+	          "section":"static-123",
+	          "assetid":"static-123",
+	          "segA":"segA example",
+	          "segB":"segB example",
+	          "segC":"segC example"
+	           };
+	   
+     
+	<!--call staticstart API event-->
+     
+      staticSdkInstance.ggPM("staticstart",staticMeta);
+      
+      /**
+      Nielsen Log >  Page onBlur fired and stopped static timer: undefined		- browser window from active -> inactive	
+	  Nielsen Log >  Page onFocus fired and playing static timer: undefined		- browser window from inactive -> active
+      **/
+
+
+      // is Window active - only for visualization, not for NLS measurement
+    
+      $('#isWindowActive').html("window focus - static measurement ON");
+	  
+	  $(window).focus(function() {
+			$('#isWindowActive').html("window focus - static measurement ON");
+	  });
+	
+	  $(window).blur(function() {
+			$('#isWindowActive').html("window out focus - static measurement OFF");
+	  });
+	  
+
+   
+   
+   </script>
+
+ 
+
 </body>
 </html>
