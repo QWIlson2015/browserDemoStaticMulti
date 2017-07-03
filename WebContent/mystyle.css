@@ -4,7 +4,7 @@ body {
     font-family: Sans-serif;
     font-size: 13px;
     margin-left: 20px;
-    color: white;
+    color: black;
 }
 
 #nadpis {
@@ -17,5 +17,5 @@ body {
 table.stat th, table.stat td {
   font-size: 13px;
   font-family : "Myriad Web",Verdana,Helvetica,Arial,sans-serif;
-  color : white
+  color : black
 }
