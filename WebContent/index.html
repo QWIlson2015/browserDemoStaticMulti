@@ -107,6 +107,20 @@
 	  
 
    
+	<!--error checks-->
+	
+	if (!window.NOLBUNDLE){
+	      console.error('Nielsen SDK namespace does not exist');
+	}
+	
+	setTimeout(function(){
+	     if (!staticSdkInstance.initialized){
+	         console.error('Nielsen static instance not initialized');
+	     }
+	     
+	}, 2000);
+
+	  
    
    </script>
 
