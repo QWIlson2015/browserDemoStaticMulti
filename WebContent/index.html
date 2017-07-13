@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nielsen Sample Player with BSDK</title>
   <link rel="stylesheet" type="text/css" href="mystyle.css">
-  <link rel="shortcut icon" href="http://sdkdemo.admosphere.cz/favicon.ico">
+  <link rel="shortcut icon" href="http://sdkdemo.admosphere.cz/icons/favicon.ico">
   
   <!-- jquery -->
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -52,6 +52,7 @@
 	
 	<!--Add Static Queue Snippet here -->
 	
+	<!-- old 
 	    !function(t,n){t[n]=t[n]||
 	    {
 	      nlsQ:function(e,o,c,r,s,i)
@@ -64,6 +65,22 @@
 	        }
 	    }
 	    (window,"NOLBUNDLE");
+	    -->
+	    
+	   <!-- new since 10.7.2017 -->
+	    !function(t,n){t[n]=t[n]||
+	     {
+	      nlsQ:function(e,o,c,r,s,i)
+	      {
+	       return s=t.document,
+	       r=s.createElement("script"),
+	       r.async=1,
+	       r.src=("http:"===t.location.protocol?"http:":"https:")+"//cdn-gl.imrworldwide.com/conf/"+e+".js#name="+o+"&ns="+n,i=s.getElementsByTagName("script")[0],i.parentNode.insertBefore(r,i),
+	       t[n][o]=t[n][o]||{g:c||{},ggPM:function(e,c,r,s,i){(t[n][o].q=t[n][o].q||[]).push([e,c,r,s,i])}},t[n][o]}
+	    }
+	  }
+	  (window,"NOLBUNDLE");
+	  
  
 
 	<!--initialize the SDK -->
@@ -75,8 +92,8 @@
  
         var staticMeta = { 
 	          "type":"static",
-	          "section":"static-123",
-	          "assetid":"static-123",
+	          "section":"static section example",
+	          "assetid":"static assetid example",
 	          "segA":"segA example",
 	          "segB":"segB example",
 	          "segC":"segC example"
