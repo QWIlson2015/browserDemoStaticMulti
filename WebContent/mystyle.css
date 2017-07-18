@@ -13,6 +13,20 @@ body {
 	margin-top : 20px;
 }
 
+#div_one {
+	background-color: yellow;
+	border-style: dotted;
+    margin-bottom : 20px;
+    margin-top : 20px;	
+}
+
+#div_two {
+	background-color: #FFFFFF;
+	border-style: dotted;
+    margin-bottom : 20px;
+	margin-top : 20px;	
+}
+
 
 table.stat th, table.stat td {
   font-size: 13px;

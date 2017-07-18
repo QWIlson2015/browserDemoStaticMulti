@@ -1,21 +1,24 @@
 
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nielsen Sample Player with BSDK</title>
-  <link rel="stylesheet" type="text/css" href="mystyle.css">
-  <link rel="shortcut icon" href="http://sdkdemo.admosphere.cz/icons/favicon.ico">
-  
-  <!-- jquery -->
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Nielsen Sample Player with BSDK</title>
+
+	<link rel="stylesheet" type="text/css" href="mystyle.css">
+	<link rel="shortcut icon" href="http://sdkdemo.admosphere.cz/icons/favicon.ico">
+	
+	<!-- jquery -->
+	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+	
+
 </head>
 <body>
-    
-   	<div id="nadpis">Browser Demo - Static (page) measurement</div>
- 
- 	<table border="0" class="stat">
+
+	<div id="nadpis">Browser Demo - Static (page) measurement</div>
+
+	<table border="0" class="stat">
 		<tr>
 			<td>Player</td>
 			<td>n/a</td>
@@ -37,20 +40,28 @@
 			<td>..pending ..</td>
 		</tr>
 	</table>
-	
-	<br><br>
-  	This is a static page example <br><br>
-  	use Chrome Developer Tool - Console to confirm that event "staticstart" is beeing sent every second once browser windows is active   
- 
- 	<br><br>Window status :
-  	<div id="isWindowActive"></div>
-  	
 
-  
+	<br>
+	<br> This is a static page example
+	<br>
+	<br>
+
+
+	<br>
+	<br><u>NLS static measurement status :</u>
+	<div id="isWindowActive"></div>
+	<div id="whasIsSelected"></div>
+
+
 	<script type="text/javascript">
-
 	
-	<!--Add Static Queue Snippet here -->
+	var staticMeta;
+	var div1time = 0;
+	var div2time = 0;
+	var clockDiv1;
+	var clockDiv2;
+	
+	<!-- Nielsen - Add Static Queue Snippet here -->
 	
 	<!-- old 
 	    !function(t,n){t[n]=t[n]||
@@ -83,16 +94,17 @@
 	  
  
 
-	<!--initialize the SDK -->
+	<!-- Nielsen - initialize the SDK -->
 												
-  		var staticSdkInstance = NOLBUNDLE.nlsQ("T74896328-A13B-4985-8798-0AEBFA228D3E", "staticSdkInstance", { nol_sdkDebug: "debug" });        
+ 	var staticSdkInstance = NOLBUNDLE.nlsQ("T74896328-A13B-4985-8798-0AEBFA228D3E", "staticSdkInstance", { nol_sdkDebug: "debug" });        
   
+ 	
+	function callStaticStartDiv1() {
  
-	<!--create static metadata object -->
- 
-        var staticMeta = { 
+		<!--create static metadata object -->
+        staticMeta = { 
 	          "type":"static",
-	          "section":"static section example",
+	          "section":"div1 section",
 	          "assetid":"static assetid example",
 	          "segA":"segA example",
 	          "segB":"segB example",
@@ -100,48 +112,204 @@
 	           };
 	   
      
-	<!--call staticstart API event-->
+        <!-- Nielsen - call staticstart API event-->
+     	console.log("Calling NLS event staticstart for DIV 1..");  
+		staticSdkInstance.ggPM("staticstart",staticMeta);
+		
+	}
+
+	
+	function callStaticStartDiv2() {
+ 
+		<!--create static metadata object -->
+        staticMeta = { 
+	          "type":"static",
+	          "section":"div2 section",
+	          "assetid":"static assetid example",
+	          "segA":"segA example",
+	          "segB":"segB example",
+	          "segC":"segC example"
+	           };
+	   
      
-      staticSdkInstance.ggPM("staticstart",staticMeta);
-      
-      /**
-      Nielsen Log >  Page onBlur fired and stopped static timer: undefined		- browser window from active -> inactive	
-	  Nielsen Log >  Page onFocus fired and playing static timer: undefined		- browser window from inactive -> active
-      **/
-
-
+        <!-- Nielsen - call staticstart API event-->
+     	console.log("Calling NLS event staticstart for DIV 2..");  
+		staticSdkInstance.ggPM("staticstart",staticMeta);
+		
+	}
+	
+	
+	function callStaticEnd() {
+		<!-- Nielsen - call staticend API event--> 
+		console.log("Calling NLS event staticend ..");
+		staticSdkInstance.ggPM("staticend",staticMeta);
+	}
+	
+	
+	function clock1() {
+		
+		div1time=0;
+		clockDiv1 = setInterval(function(){ myTimer1() }, 1000);
+		
+		function myTimer1() {
+			div1time++;
+			$('#clockDiv1').html("Time spent " +  div1time);
+		}
+	}
+	
+	function clock2() {
+		
+		div2time=0;
+		clockDiv2 = setInterval(function(){ myTimer2() }, 1000);
+		
+		function myTimer2() {
+			div2time++;
+			$('#clockDiv2').html("Time spent " + div2time);
+		}
+	}
+	
+	
+	  // after start select and fire Div1
+	  callStaticStartDiv1();
+	  clock1();
+	  $('#whasIsSelected').html("Selected DIV 1");
+	
+	  
       // is Window active - only for visualization, not for NLS measurement
     
-      $('#isWindowActive').html("window focus - static measurement ON");
+      $('#isWindowActive').html("window in focus - static measurement ON");
 	  
 	  $(window).focus(function() {
-			$('#isWindowActive').html("window focus - static measurement ON");
+			$('#isWindowActive').html("window in focus - static measurement ON");
 	  });
 	
 	  $(window).blur(function() {
 			$('#isWindowActive').html("window out focus - static measurement OFF");
+			// stop clocks
+			clearInterval(clockDiv1);
+			clearInterval(clockDiv2);
+			$(".div_one").css("background-color","white");
+			$(".div_two").css("background-color","white");
 	  });
 	  
 
-   
-	<!--error checks-->
-	
-	if (!window.NOLBUNDLE){
-	      console.error('Nielsen SDK namespace does not exist');
-	}
-	
-	setTimeout(function(){
-	     if (!staticSdkInstance.initialized){
-	         console.error('Nielsen static instance not initialized');
-	     }
-	     
-	}, 2000);
-
+	    
+	  <!-- Nielsen - error checks-->
+		
+	  if (!window.NOLBUNDLE){
+		      console.error('Nielsen SDK namespace does not exist');
+	  }
+		
+	  setTimeout(function(){
+		     if (!staticSdkInstance.initialized){
+		         console.error('Nielsen static instance not initialized');
+		     }
+		     
+		}, 2000);
 	  
-   
-   </script>
+	  </script>
 
- 
+	<br>
+
+
+	<!--  div 1 start -->
+
+	<div id="div_one" class="div_one">
+		<p align="right"><font color=grey>DIV 1</font></p>
+		<br><br>
+		<center>foo foo foo - dummy content in DIV 1<br><br>
+		<div id="clockDiv1">Time spent 0</div>
+		<br><br><br>
+	</div>
+
+	<!--  div 1 end -->
+
+
+	<!--  div 2 start -->
+
+	<div id="div_two" class="div_two">
+		<p align="right"><font color=grey>DIV 2</font></p>
+		<br><br>
+		<center>foo foo foo - dummy content in DIV 2<br><br>
+		<div id="clockDiv2">Time spent 0</div>
+		<br><br><br>
+	</div>
+
+	<!--  div 2 end -->
+	
+	<br><br><br>
+	HINT : Please use Chrome addon Nielsen Inspector to confirm Nielsen SDK API events<br>
+	<a href="images/nlsinspector_static.png" title=""><img src="images/nlsinspector_static.png" alt="" width=200></a>
+
+
+
+	<!--handle selection of div -->
+	<script type="text/javascript">
+	
+	
+	$(".div_one").click(function(){
+		
+		// going from DIV2 -> DIV1
+		
+		console.log("Switched to DIV 1");
+		$(".div_one").css("background-color","yellow");
+		$(".div_two").css("background-color","white");
+		$('#whasIsSelected').html("Selected DIV 1");
+		
+		// finish prev session
+		callStaticEnd();
+		
+		// stop clock for DIV2
+	 	clearInterval(clockDiv2);
+		
+	 	// start new session
+		callStaticStartDiv1();
+	 
+		// start clock for DIV1
+		clock1();
+		
+	});
+	
+	$(".div_two").click(function(){
+		
+		// going from DIV1 -> DIV2
+		
+		console.log("Switched to DIV 2");
+		$(".div_one").css("background-color","white"); 
+		$(".div_two").css("background-color","yellow");
+	    $('#whasIsSelected').html("Selected DIV 2");
+	   
+	 	// finish prev session
+		callStaticEnd();
+	
+		// stop clock for DIV1
+	 	clearInterval(clockDiv1);
+		
+	 	// start new session
+		callStaticStartDiv2();
+	 
+		// start clock for DIV2
+		clock2();
+	    
+	});
+	
+	
+	</script>
+
+	<!--when closing or leaving page  -->
+
+	<script type="text/javascript">  
+	
+	$(window).bind('beforeunload', function(){
+		  console.log("Session end");
+		  callStaticEnd();
+	});
+	
+	
+	</script>
+
+
+
 
 </body>
 </html>
